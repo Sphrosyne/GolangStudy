@@ -19,9 +19,10 @@ func main() {
 	// 创建各类对象
 	var (
 		//申请下来的虚拟机id
-		vmId = make([]string, 5)
+		//vmId = make([]string, 5)
+		vmId = []string{"22aefe8b-23d0-477b-8e21-17ee02db92b7", "a5491ba8-574d-4bb2-896b-f0c94d2b6dd3"}
 		//全局登录校验token
-		token = " lang=zh-CN; region=region0; tenant=7cef0ecb38904b338bc051b7dc4f80b7; scope=system; domain=Default; yunionauth=eyJleHAiOiIyMDIyLTA5LTIxVDA4OjEwOjMwWiIsImlzX3NzbyI6ZmFsc2UsInNlc3Npb24iOiJleUpoYkdjaU9pSlNVMEV4WHpVaUxDSjZhWEFpT2lKRVJVWWlMQ0psYm1NaU9pSkJNVEk0UjBOTkluMC5Ycmd3VzFaN3NrVDFPREZoTE5EeWJUUFVRbEhtQnVfeUxGUHJzaURDMEZuYU0tam1tN21RQ1RjNkRyQUh0bzRobDVYREVIdndMOFkxcXh6WVQtYTRyN2VnWHdSWDB0Q1RGelpVY21CWVRGU3ZvRHNER29RQXdiQWt6dS1MdEJfdHdPRWFoQ0IyaGFkYmktenZPU2oyNENnR3djcU4tTzdSeGtUNzA4Mjd5T1d3RVN6ZGh0VXp0cUxoaEhXd2VKSEU2aktPUUd1Y2pJNjFXTVgwVEpxWno4aVJEXzFzYkNlN3QzWXRvYmZCVmk2Slpadldsd0xBcV95YVhDY2ZNc3BFaDhxR1JlUnQwVGhMMG5iUjNrR3oxX3BQd3FqbWpiSHB0dXIwQ2ZuT3RQSGNkbDBmWUxSRm1jbUU3Mm1jaXppZ2lQMzRoQlp4QnNEQ08wOTdzbkpzZmcua202dkIyQllKT1FGMTFFcy5GWklKbGJqaG9iTGxoU1N6ZUFZWHlvUTJpaEx3NngzbkZ1ank0RkxzdmR5NnY1SWZhT2VJd01BajdDUk5PR0lBRlVnZVd1VFRLQ2JvbWhLcGRRMzVtLVhzZzVjVXJPcjMweFJ0cG1nSk9DTi1ORG4yRzEwTTdsRVJGMjVYNHMwMzBRNG42Y0xhRlg3dS1LNmFYSDhaZlVJV0hyNTlsUGhXdEVTSk1aTkhXZEJ3YUstVWJZN3lEcW8wX1FQc3JhNEQtRXJ1ZU91QTZ1anM2bThhMmlCdHlBekMxakZQUlJVNW9QY0o0aGVZdGI5dzFvLXg1cEU0TDZLVWU5cEQtLUZoYzVLWXF3LlJCSV9ZUHB1RW1qbDYyX0FQTUQ5bFEiLCJzeXN0ZW1fdG90cF9vbiI6dHJ1ZSwidG90cF9pbml0IjpmYWxzZSwidG90cF9vbiI6ZmFsc2UsInRvdHBfdmVyaWZpZWQiOmZhbHNlLCJ1c2VyIjoiYWRtaW4iLCJ1c2VyX2lkIjoiMGY2NDIxZGE1N2IzNGI4NDhjYTExOWUwNzk4MWFlMGYifQ"
+		token = "lang=zh-CN; tenant=7cef0ecb38904b338bc051b7dc4f80b7; scope=system; yunionauth=eyJleHAiOiIyMDIyLTA5LTIyVDA4OjE2OjU2WiIsImlzX3NzbyI6ZmFsc2UsInNlc3Npb24iOiJleUpoYkdjaU9pSlNVMEV4WHpVaUxDSjZhWEFpT2lKRVJVWWlMQ0psYm1NaU9pSkJNVEk0UjBOTkluMC5NclVOTUdWSHRPc3I3NG5SWURlbzNMT00tZm56YzduR2ZuYUN3RVpBRHg4bDIwanFrQzdzNURhSFF5QkNJd1k4ZmtDOXk1RXI2Nnp1dW51aHloZWRfR2NYZkQ0dlltYlpZVGxtbHl4RE9iaWpkaDJHQ2RTY3RRNWlmZkdJamlTaTh2dmxKWTN3UEVBdEJKWElqSExLOXNUdkl6TFlGQmZwSmNFSmtpM2F6dmNpejk5T1IyXzlyODJaeTctZnM2b3JHMHRHNXoxMDNqSExkMVk0bWpkN01lLU1tYTBsRGRoY3BXbm5iYUpiQ1Q2bUphWUN5SHhmb21lWEQ0NlFvdU42MHV1QWtBbWhSUlFwcjB6TVFsdi1RUWp3ZXlkSml3TlI0OUtsMGZsbnNXTkZmYWFSelpDUlVKVlZSdlhIMTJGdGczVGFRZDJYNmd5bVdhY243OUMzLUEucXlmSXlVUURuVnVTVjk0Uy5KS1MzemtycmtFWTlzN2lCNVlhVWhYMmtkMS1BZGZ2eXhlTVFrNkJvU1JQbEdQTGszeVAxbEd5VDRuMnpfSS1EZjl0Z3BpOUd1MGt1SG5VQ05XUWMtTU9hZ1lDNDBPekNvcURramFvZk0wRU1hSEhTUEV1MTcwU0lnMGZETW5UZ1YtTElSb2lSaC11N2VKeVlmeTA0elk0ekdYeDEzTG1mV0k3UlFsU1VBeVpJZ3FOSmxwTF80cFRiVXNqMmZxN3hYUzBZWHUwV1VwWE1OdlNWd2hUVktELVpSRDdRZGlXMkFORWVxUGJOeVNLQ2ctdUZTVG5ZdGhwXy03UTlvQl94ZFkxYUduMXguQk5TTVh2N0ZHYXpKTG1ELV9NbGFiQSIsInN5c3RlbV90b3RwX29uIjp0cnVlLCJ0b3RwX2luaXQiOmZhbHNlLCJ0b3RwX29uIjpmYWxzZSwidG90cF92ZXJpZmllZCI6ZmFsc2UsInVzZXIiOiJhZG1pbiIsInVzZXJfaWQiOiIwZjY0MjFkYTU3YjM0Yjg0OGNhMTE5ZTA3OTgxYWUwZiJ9; domain=Default; region=region0"
 		//所有请求访问地址
 		requestAddress = "https://10.62.2.92/"
 
@@ -35,8 +36,7 @@ func main() {
 		manager     = "tencent"
 
 		//访问相关
-		domain = "www.test.com"
-		path   = "/image"
+		path = "/image"
 	)
 
 	//1、新建负载均衡器，获得负载均衡器id（异步）
@@ -54,11 +54,11 @@ func main() {
 		log.Println("新建后端服务器组失败，结束")
 		return
 	}
-	time.Sleep(1 * time.Second)
+	time.Sleep(3 * time.Second)
 
 	//4、指定后端服务器组backend_group（就是后端服务器组id），backend为虚拟机的id，guest_backend为虚拟机的id，添加服务器
 	groupAddVM(token, requestAddress, groupId, vmId)
-	time.Sleep(1 * time.Second)
+	time.Sleep(3 * time.Second)
 
 	//5、指定负载均衡器loadbalancer（就是负载均衡器id），指定backend_group（就是后端服务器组id）,新建监听，返回id
 	listenId := newListen(token, requestAddress, lbId, groupId)
@@ -66,9 +66,9 @@ func main() {
 		log.Println("新建监听失败，结束")
 		return
 	}
-	time.Sleep(1 * time.Second)
-	//6、指定listener（监听id），创建转发规则，创建监听成功（需要几秒钟）
-	newTransmit(token, requestAddress, listenId, groupId, domain, path)
+	time.Sleep(3 * time.Second)
+	//6、指定listener（监听id），创建转发规则
+	newTransmit(token, requestAddress, listenId, groupId, path)
 }
 
 func newLoadBalance(token, requestAddress, project, provider, cloudregion, zone, vpc, manager string) string {
@@ -191,22 +191,60 @@ func newListen(token, requestAddress, lbId, groupId string) string {
 	log.Println("新建的监听id：", listenId)
 	return listenId
 }
-func newTransmit(token, requestAddress, listenId, groupId, domain, path string) {
+func newTransmit(token, requestAddress, listenId, groupId, path string) {
 	url := requestAddress + "api/v2/loadbalancerlistenerrules"
-	data1 := make(map[string]interface{})
-	data1["listener_type"] = "http"
-	data1["name"] = "strategy"
-	data1["domain"] = domain
-	data1["path"] = path
-	data1["backend_group"] = groupId
-	data1["redirect"] = "off"
-	data1["listener"] = listenId
+	i := 1
+	for {
+		data1 := make(map[string]interface{})
+		data1["listener_type"] = "http"
+		data1["name"] = "strategy" + strconv.FormatInt(time.Now().Unix(), 10)
+		data1["domain"] = "www.luvs" + strconv.FormatInt(time.Now().Unix(), 10) + ".com"
+		data1["path"] = path
+		data1["backend_group"] = groupId
+		data1["redirect"] = "off"
+		data1["listener"] = listenId
 
-	// Marshal
-	bytesData, _ := json.Marshal(data1)
-	resp1, _ := postHttpsSkip(url, token, bytesData)
-	//获取创建转发规则反馈信息
-	log.Println("负载均衡器创建转发规则：", string(resp1))
+		// Marshal
+		bytesData, _ := json.Marshal(data1)
+		resp1, _ := postHttpsSkip(url, token, bytesData)
+		//获取创建转发规则反馈信息
+		log.Println("负载均衡器创建转发规则：", string(resp1))
+		ruleId := gjson.Get(string(resp1), "id").String()
+		time.Sleep(3 * time.Second)
+
+		//获取转发规则创建的最终结果create_failed、enabled、creating
+		//7、查询转发规则创建情况，失败则继续创建几次
+		status := getTransmitStatus(requestAddress, ruleId, listenId, token, i)
+		if status == "enabled" || i >= 5 {
+			log.Println("最终转发规则创建状态：", status)
+			break
+		}
+		i++
+	}
+}
+func getTransmitStatus(requestAddress, ruleId, listenId, token string, k int) string {
+	var builderGetRuleStatus strings.Builder
+	builderGetRuleStatus.WriteString(requestAddress)
+	builderGetRuleStatus.WriteString("api/v2/loadbalancerlistenerrules?scope=system&show_fail_reason=true&details=false&limit=20")
+	builderGetRuleStatus.WriteString("&listener=")
+	builderGetRuleStatus.WriteString(listenId)
+	builderGetRuleStatus.WriteString("&id=")
+	builderGetRuleStatus.WriteString(ruleId)
+	urlGetRuleStatus := builderGetRuleStatus.String()
+	i := 0
+	var status string
+	for {
+		resp2, _ := getHttpsSkip(urlGetRuleStatus, token)
+		log.Println("获取转发规则状态信息：", string(resp2))
+		status = gjson.Get(string(resp2), "data.0.status").String()
+		i++
+		if i >= 40 || status != "creating" {
+			log.Println("第", k, "次转发规则创建状态:", status)
+			break
+		}
+		time.Sleep(1 * time.Second)
+	}
+	return status
 }
 
 func postHttpsSkip(url, token string, bytesData []byte) ([]byte, error) {
