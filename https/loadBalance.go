@@ -16,7 +16,7 @@ import (
 )
 
 func main() {
-	// 创建各类对象
+	//变化性参数
 	var (
 		//申请下来的虚拟机id
 		//vmId = make([]string, 5)
