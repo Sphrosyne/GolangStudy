@@ -3,17 +3,22 @@ package main
 import (
 	"crypto/tls"
 	"fmt"
+	"github.com/tidwall/gjson"
+	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
 )
 
 func main() {
-	urlx := "https://10.62.2.92/api/v2/loadbalancers?scope=system&show_fail_reason=true&public_cloud=true&details=false&limit=20&id=1d6a4861-0146-4a89-81e4-3546f30655c9"
-	token := " lang=zh-CN; region=region0; tenant=7cef0ecb38904b338bc051b7dc4f80b7; scope=system; yunionauth=eyJleHAiOiIyMDIyLTA5LTIxVDA4OjEwOjMwWiIsImlzX3NzbyI6ZmFsc2UsInNlc3Npb24iOiJleUpoYkdjaU9pSlNVMEV4WHpVaUxDSjZhWEFpT2lKRVJVWWlMQ0psYm1NaU9pSkJNVEk0UjBOTkluMC5Ycmd3VzFaN3NrVDFPREZoTE5EeWJUUFVRbEhtQnVfeUxGUHJzaURDMEZuYU0tam1tN21RQ1RjNkRyQUh0bzRobDVYREVIdndMOFkxcXh6WVQtYTRyN2VnWHdSWDB0Q1RGelpVY21CWVRGU3ZvRHNER29RQXdiQWt6dS1MdEJfdHdPRWFoQ0IyaGFkYmktenZPU2oyNENnR3djcU4tTzdSeGtUNzA4Mjd5T1d3RVN6ZGh0VXp0cUxoaEhXd2VKSEU2aktPUUd1Y2pJNjFXTVgwVEpxWno4aVJEXzFzYkNlN3QzWXRvYmZCVmk2Slpadldsd0xBcV95YVhDY2ZNc3BFaDhxR1JlUnQwVGhMMG5iUjNrR3oxX3BQd3FqbWpiSHB0dXIwQ2ZuT3RQSGNkbDBmWUxSRm1jbUU3Mm1jaXppZ2lQMzRoQlp4QnNEQ08wOTdzbkpzZmcua202dkIyQllKT1FGMTFFcy5GWklKbGJqaG9iTGxoU1N6ZUFZWHlvUTJpaEx3NngzbkZ1ank0RkxzdmR5NnY1SWZhT2VJd01BajdDUk5PR0lBRlVnZVd1VFRLQ2JvbWhLcGRRMzVtLVhzZzVjVXJPcjMweFJ0cG1nSk9DTi1ORG4yRzEwTTdsRVJGMjVYNHMwMzBRNG42Y0xhRlg3dS1LNmFYSDhaZlVJV0hyNTlsUGhXdEVTSk1aTkhXZEJ3YUstVWJZN3lEcW8wX1FQc3JhNEQtRXJ1ZU91QTZ1anM2bThhMmlCdHlBekMxakZQUlJVNW9QY0o0aGVZdGI5dzFvLXg1cEU0TDZLVWU5cEQtLUZoYzVLWXF3LlJCSV9ZUHB1RW1qbDYyX0FQTUQ5bFEiLCJzeXN0ZW1fdG90cF9vbiI6dHJ1ZSwidG90cF9pbml0IjpmYWxzZSwidG90cF9vbiI6ZmFsc2UsInRvdHBfdmVyaWZpZWQiOmZhbHNlLCJ1c2VyIjoiYWRtaW4iLCJ1c2VyX2lkIjoiMGY2NDIxZGE1N2IzNGI4NDhjYTExOWUwNzk4MWFlMGYifQ; domain=Default"
+	urlx := "https://10.62.2.92/api/v2/loadbalancers?scope=system&show_fail_reason=true&public_cloud=true&details=false&limit=20&id=94eab444-fa53-4912-8ecb-e4b263e1905e"
+	token := "lang=zh-CN; region=region0; tenant=7cef0ecb38904b338bc051b7dc4f80b7; scope=system; yunionauth=eyJleHAiOiIyMDIyLTA5LTIyVDA4OjE2OjU2WiIsImlzX3NzbyI6ZmFsc2UsInNlc3Npb24iOiJleUpoYkdjaU9pSlNVMEV4WHpVaUxDSjZhWEFpT2lKRVJVWWlMQ0psYm1NaU9pSkJNVEk0UjBOTkluMC5NclVOTUdWSHRPc3I3NG5SWURlbzNMT00tZm56YzduR2ZuYUN3RVpBRHg4bDIwanFrQzdzNURhSFF5QkNJd1k4ZmtDOXk1RXI2Nnp1dW51aHloZWRfR2NYZkQ0dlltYlpZVGxtbHl4RE9iaWpkaDJHQ2RTY3RRNWlmZkdJamlTaTh2dmxKWTN3UEVBdEJKWElqSExLOXNUdkl6TFlGQmZwSmNFSmtpM2F6dmNpejk5T1IyXzlyODJaeTctZnM2b3JHMHRHNXoxMDNqSExkMVk0bWpkN01lLU1tYTBsRGRoY3BXbm5iYUpiQ1Q2bUphWUN5SHhmb21lWEQ0NlFvdU42MHV1QWtBbWhSUlFwcjB6TVFsdi1RUWp3ZXlkSml3TlI0OUtsMGZsbnNXTkZmYWFSelpDUlVKVlZSdlhIMTJGdGczVGFRZDJYNmd5bVdhY243OUMzLUEucXlmSXlVUURuVnVTVjk0Uy5KS1MzemtycmtFWTlzN2lCNVlhVWhYMmtkMS1BZGZ2eXhlTVFrNkJvU1JQbEdQTGszeVAxbEd5VDRuMnpfSS1EZjl0Z3BpOUd1MGt1SG5VQ05XUWMtTU9hZ1lDNDBPekNvcURramFvZk0wRU1hSEhTUEV1MTcwU0lnMGZETW5UZ1YtTElSb2lSaC11N2VKeVlmeTA0elk0ekdYeDEzTG1mV0k3UlFsU1VBeVpJZ3FOSmxwTF80cFRiVXNqMmZxN3hYUzBZWHUwV1VwWE1OdlNWd2hUVktELVpSRDdRZGlXMkFORWVxUGJOeVNLQ2ctdUZTVG5ZdGhwXy03UTlvQl94ZFkxYUduMXguQk5TTVh2N0ZHYXpKTG1ELV9NbGFiQSIsInN5c3RlbV90b3RwX29uIjp0cnVlLCJ0b3RwX2luaXQiOmZhbHNlLCJ0b3RwX29uIjpmYWxzZSwidG90cF92ZXJpZmllZCI6ZmFsc2UsInVzZXIiOiJhZG1pbiIsInVzZXJfaWQiOiIwZjY0MjFkYTU3YjM0Yjg0OGNhMTE5ZTA3OTgxYWUwZiJ9; domain=Default"
 
 	resp, _ := GetHttpsSkip(urlx, token)
 	fmt.Println(string(resp))
+
+	value1 := gjson.Get(string(resp), "data.0.address")
+	fmt.Println("------", value1.String())
 }
 func GetHttpsSkip(url, token string) ([]byte, error) {
 	// 创建各类对象
@@ -46,7 +51,12 @@ func GetHttpsSkip(url, token string) ([]byte, error) {
 		log.Println("GetHttpSkip Response Error:", err)
 		return nil, nil
 	}
-	defer resp.Body.Close()
+	defer func(Body io.ReadCloser) {
+		err := Body.Close()
+		if err != nil {
+			log.Println("resp.Body.close Error", err)
+		}
+	}(resp.Body)
 
 	body, err = ioutil.ReadAll(resp.Body)
 
