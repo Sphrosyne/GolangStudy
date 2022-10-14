@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
 	num := make(chan int)
@@ -8,7 +10,7 @@ func main() {
 
 	go func() {
 		for i := 0; i < 10; i++ {
-			fmt.Println(<-num)
+			fmt.Println(i, "---------", <-num)
 		}
 		quit <- 0
 	}()
@@ -18,7 +20,10 @@ func main() {
 }
 func fil(num, quit chan int) {
 	x, y := 1, 1
+	k := 0
 	for {
+		k++
+		fmt.Println("第", k, "次")
 		select {
 		case num <- x:
 			//如果num可以写，则可以进来

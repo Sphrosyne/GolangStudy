@@ -18,4 +18,8 @@ func main() {
 
 	xx := <-num
 	fmt.Println("值", xx)
+
+	//主线程等支线程结束
+	time.Sleep(5 * time.Second)
+
 }

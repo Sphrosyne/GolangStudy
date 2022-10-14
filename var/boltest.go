@@ -3,14 +3,16 @@ package main
 import "fmt"
 
 var bol = true
+var a = 3
 
 func main() {
+	change(&bol, &a)
 
 	fmt.Println(bol)
-	change(bol)
-	fmt.Println(bol)
+	fmt.Println(a)
 
 }
-func change(bol bool) {
-	bol = false
+func change(xx *bool, yy *int) {
+	*xx = false
+	*yy = 4
 }
