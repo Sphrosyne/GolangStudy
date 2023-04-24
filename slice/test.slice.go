@@ -18,7 +18,7 @@ func main() {
 	var myArray4 []int = make([]int, 4)
 
 	if myArray4 == nil {
-		fmt.Println("xxxx")
+		fmt.Println("asdwee")
 		printArray(myArray4)
 	} else {
 		fmt.Println("yyyy")

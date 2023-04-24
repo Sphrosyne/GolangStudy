@@ -1,8 +1,11 @@
 package main
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"github.com/google/uuid"
+	"strings"
 	"yunion.io/x/jsonutils"
 )
 
@@ -26,18 +29,19 @@ func main() {
 	myMenu := []Menu{}
 	err = menuStruct.Unmarshal(&myMenu)
 	fmt.Println("!!!", myMenu)
-
-	for _, menu := range myMenu {
+	for i, menu := range myMenu {
 		fmt.Println(menu.Id)
 		random, _ := uuid.NewRandom()
-		menu.Id = random.ID()
-		for _, child := range menu.Children {
+		myMenu[i].Id = random.ID()
+		for k, child := range menu.Children {
 			fmt.Println(child.Id)
 			random, _ := uuid.NewRandom()
-			child.Id = random.ID()
+			myMenu[i].Children[k].Id = random.ID()
 		}
 	}
-
+	marshal, err := json.Marshal(myMenu)
+	parse, err := jsonutils.Parse(marshal)
+	fmt.Println(parse)
 	/*array, err := menuStruct.GetArray()
 	for _, menu := range array {
 		id, err := menu.GetString("id")
@@ -65,7 +69,25 @@ func main() {
 		}
 	}*/
 	fmt.Println("****", myMenu)
-
 	/*at, err := menuStruct.GetAt(0)
 	fmt.Println("**", at)*/
+}
+
+func getMyString(myMenu []Menu) (string, error) {
+	var buffer bytes.Buffer
+	var err error
+	var b []byte
+
+	for _, item := range myMenu {
+		b, err = json.Marshal(item)
+		if err != nil {
+			return "", err
+		}
+
+		buffer.WriteString(string(b) + ",")
+	}
+
+	s := strings.TrimSpace(buffer.String())
+
+	return s, nil
 }

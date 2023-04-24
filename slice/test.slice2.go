@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"yunion.io/x/jsonutils"
+)
 
 func main() {
 	//追加、截取、复制
@@ -28,4 +31,13 @@ func main() {
 	for i := 0; i < len(myArray3); i++ {
 		fmt.Println(myArray3[i])
 	}
+	fmt.Println("===============")
+	var projectIds []string
+	ax := []string{"x1", "23s", "asdw"}
+	for _, s := range ax {
+		projectIds = append(projectIds, s)
+	}
+	fmt.Println(projectIds)
+	fmt.Println(jsonutils.NewStringArray(projectIds))
+
 }

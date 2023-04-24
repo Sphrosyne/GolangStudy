@@ -13,4 +13,12 @@ func main() {
 	for key, value := range map1 {
 		fmt.Println(key, value)
 	}
+
+	var xa []string
+	xa = nil
+	fmt.Println(xa == nil)
+	for i, s := range xa {
+		fmt.Println("---", xa[i])
+		fmt.Println("---", s)
+	}
 }
