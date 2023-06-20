@@ -3,7 +3,6 @@ package Test
 import (
 	"fmt"
 	"gopkg.in/fatih/set.v0"
-	"strings"
 	"testing"
 )
 
@@ -18,18 +17,4 @@ func TestSet(t *testing.T) {
 	for _, v := range list {
 		fmt.Println(v)
 	}
-}
-
-func TestSet2(t *testing.T) {
-	s := "axasasd"
-	split := strings.Split(s, ",")
-	fmt.Println(len(split))
-
-	strins := make([]string, 0)
-	for i, strin := range split {
-		fmt.Println("******", split[i])
-		strins = append(strins, strin)
-	}
-	fmt.Println("&&&&", len(strins))
-	fmt.Println(strins)
 }
