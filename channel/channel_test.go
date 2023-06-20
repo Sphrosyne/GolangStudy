@@ -1,11 +1,12 @@
-package main
+package Test
 
 import (
 	"fmt"
+	"testing"
 	"time"
 )
 
-func main() {
+func TestChannel(t *testing.T) {
 
 	num := make(chan int)
 
